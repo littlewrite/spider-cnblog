@@ -21,4 +21,4 @@ class BlogParser(abstract_parser.AbstractParser):
         if current_url is None or html is None:
             return None
         soup = butfsp(html, 'html.parser', from_encoding = 'utf-8')
-        return self._get_new_urls(current_url, soup), self._get_new_data(current_url, soup)
+        return self._get_new_urls(current_url, soup), self._get_new_data(current_url, soup), 'blog'

@@ -21,9 +21,12 @@ class SpiderMain(object):
                 new_url = self.urls.get_new_url()
                 html_text = self.downloader.download(new_url)
                 print('#%d craw: %s' % (count, new_url))
-                new_urls, new_data = self.parser.parse(new_url, html_text)
+                new_urls, new_data, group = self.parser.parse(new_url, html_text)
+                if('pager' == group) :
+                    self.outputer.collect_titles(new_data)
+                elif('blog' == group):
+                    self.outputer.collect_article(new_data)
                 self.urls.add_new_urls(new_urls)
-                self.outputer.collect_data(new_data)
                 count += 1
                 if self.max == count:
                     break
@@ -39,5 +42,5 @@ class SpiderMain(object):
 if "__main__" == __name__:
     # root_url = "http://cl.c7e.biz/thread0806.php?fid=20" # adult literature
     root_url = "http://www.cnblogs.com/sitehome/p/1" # cnblog
-    obj_spider = SpiderMain(100)
+    obj_spider = SpiderMain(20)
     obj_spider.craw(root_url)

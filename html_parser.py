@@ -14,18 +14,17 @@ class HtmlParser(object):
         # http://www.cnblogs.com/sitehome/p/1
         pager_url_pat = r"sitehome/p/\d+"
         blog_url_pat = r"[\w\s-]{3,}/p/\d{6,}.html"
-        urls = None
-        data = None
+        urls = data = group = None
         if(re.search(pager_url_pat, page_url, re.I)):
-            print 'PPPPPP ag GGGG sssss ======== ', page_url
+            print 'PPPPPP ag eeeeee ======== ', page_url
             parser = PagerParser()
-            urls, data = parser.parse(page_url, html_text)
+            urls, data, group = parser.parse(page_url, html_text)
         elif(re.search(blog_url_pat, page_url, re.I)):
-            print 'BBBB log sssss ======== ', page_url
+            print 'BBBB looooooo ======== ', page_url
             parser = BlogParser()
-            urls, data = parser.parse(page_url, html_text)
+            urls, data, group = parser.parse(page_url, html_text)
 
-        return urls,data
+        return urls, data, group
 
 
 
