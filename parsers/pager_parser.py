@@ -7,10 +7,6 @@ import abstract_parser
 
 class PagerParser(abstract_parser.AbstractParser):
 
-    def __init__(self):
-        self._urls = set()
-        self._data = set()
-
     def _get_new_urls(self,current_url, soup):
         urls = set()
         data = {}
