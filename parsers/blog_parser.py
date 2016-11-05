@@ -7,11 +7,12 @@ import abstract_parser
 class BlogParser(abstract_parser.AbstractParser):
 
     def _get_new_urls(self,current_url, soup):
-        return {}
+        return []
 
     def _get_new_data(self, current_url, soup):
         data = {}
         title = soup.find('a', id='cb_post_title_url')
+        data['url'] = current_url
         data['title'] = title.text
         content = soup.find('div', id='cnblogs_post_body')
         data['content'] = content.text

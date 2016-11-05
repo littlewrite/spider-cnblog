@@ -1,8 +1,17 @@
+# -*- coding: UTF-8 -*-
+
 
 class UrlManager(object):
     def __init__(self):
         self.new_urls = set()
         self.old_urls = set()
+
+    def add_new_urlObjects(self, urls):
+        if urls is None or 0 == len(urls):
+            return
+        # pdb.set_trace()
+        for url in urls:
+            self.add_new_url(url['url'])
 
     def add_new_urls(self, urls):
         if urls is None or 0 == len(urls):
@@ -23,3 +32,4 @@ class UrlManager(object):
         new_url = self.new_urls.pop()
         self.old_urls.add(new_url)
         return new_url
+

@@ -1,7 +1,9 @@
 # -*- coding: UTF-8 -*-
 
-import pdb
 import url_manager,html_downloader,html_parser, html_outputer
+from storages.url_storage import UrlStorage
+from storages.blog_storage import BlogStorage
+
 
 class SpiderMain(object):
 
@@ -11,22 +13,26 @@ class SpiderMain(object):
         self.downloader = html_downloader.HtmlDownloader()
         self.parser = html_parser.HtmlParser()
         self.outputer = html_outputer.HtmlOutputer()
+        self.url_storage = UrlStorage()
+        self.blog_storage = BlogStorage()
 
     def craw(self, root_url):
         count = 1
-        self.urls.add_new_url(root_url)
-        # pdb.set_trace()
+        self.urls.add_new_url(root_url['url'])
         while self.urls.has_new_url():
             try:
-                new_url = self.urls.get_new_url()
-                html_text = self.downloader.download(new_url)
-                print('#%d craw: %s' % (count, new_url))
-                new_urls, new_data, group = self.parser.parse(new_url, html_text)
+                str_new_url = self.urls.get_new_url()
+                html_text = self.downloader.download(str_new_url)
+                print('#%d craw: %s' % (count, str_new_url))
+                obj_new_urls, new_data, group = self.parser.parse(str_new_url, html_text)
                 if('pager' == group) :
-                    self.outputer.collect_titles(new_data)
+                    self.url_storage.save_urls(obj_new_urls)
+                    self.outputer.collect_titles(obj_new_urls)
                 elif('blog' == group):
+                    self.blog_storage.save_blog(new_data)
                     self.outputer.collect_article(new_data)
-                self.urls.add_new_urls(new_urls)
+
+                self.urls.add_new_urlObjects(obj_new_urls)
                 count += 1
                 if self.max == count:
                     break
@@ -41,6 +47,6 @@ class SpiderMain(object):
 
 if "__main__" == __name__:
     # root_url = "http://cl.c7e.biz/thread0806.php?fid=20" # adult literature
-    root_url = "http://www.cnblogs.com/sitehome/p/1" # cnblog
-    obj_spider = SpiderMain(20)
+    root_url = {'url':'http://www.cnblogs.com/sitehome/p/1','title':''} # cnblog
+    obj_spider = SpiderMain(4000)
     obj_spider.craw(root_url)

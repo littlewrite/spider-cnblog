@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 
-import urllib2
 import requests
+
 
 class HtmlDownloader(object):
 

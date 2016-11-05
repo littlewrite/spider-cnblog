@@ -1,8 +1,5 @@
 # -*- coding: UTF-8 -*-
 
-from bs4 import BeautifulSoup as butfsp
-import re
-import urlparse
 
 class AbstractParser:
 

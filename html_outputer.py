@@ -1,15 +1,17 @@
 #-*- coding: UTF-8 -*-
 
+
 class HtmlOutputer(object):
 
     def __init__(self):
         self.titles = []
         self.article = []
 
-    def collect_titles(self, data):
-        if data is None:
+    def collect_titles(self, titles):
+        if titles is None or 0 == len(titles):
             return None
-        self.titles.append(data)
+        for title in titles:
+            self.titles.append(title)
 
     def collect_article(self, data):
         if data is None:
