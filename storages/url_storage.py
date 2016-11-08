@@ -11,9 +11,9 @@ class UrlStorage(abstsg):
     def has_url(self, url):
         sql = u"select `url_id` from `urls` where `url` = \"%s\" " % url['url']
         re = self.query(sql)
-        if(None == re or 0 == re):
-            return False
-        return True
+        if any(re):
+            return True
+        return False
 
     def has_new_url(self):
         sql = u"select `url_id` from `urls` where `visited` = 0 and `deleted` = 0"

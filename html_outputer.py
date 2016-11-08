@@ -13,10 +13,11 @@ class HtmlOutputer(object):
         for title in titles:
             self.titles.append(title)
 
-    def collect_article(self, data):
-        if data is None:
+    def collect_articles(self, data):
+        if data is None or not any(data):
             return None
-        self.article.append(data)
+        for item in data:
+            self.article.append(item)
 
     def output_html(self):
         file_out = open('out.titles.html', 'w')

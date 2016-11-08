@@ -23,12 +23,14 @@ class BlogStorage(abstsg):
         return True
 
     def save_blog(self, blog):
-        sql = u"insert into `spider-cnblog`.`cnblog_blogs` (`url`, `title`, `article`) value (\"%s\", \"%s\", %s)"
-        return self.execute(sql, (blog['url'], blog['title'], blog['content']))
+        if None is not blog:
+            sql = u"insert into `cnblog_blogs` (`url`, `title`, `article`) value (\"%s\", \"%s\", %s)"
+            return self.execute(sql, (blog['url'], blog['title'], blog['content']))
 
     def save_blogs(self, blogs):
-        for blog in blogs:
-            self.save_blog(blog)
+        if None is not blogs and any(blogs):
+            for blog in blogs:
+                self.save_blog(blog)
 
     def get_new_blog(self):
         sql = u"select * from `cnblog_blogs` where `visited` = 0 and `deleted` = 0 limit 0"
