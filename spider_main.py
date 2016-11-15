@@ -59,9 +59,12 @@ spider_config = {
                 }
             },
             'content':{
-                'post':{
-                    'select':'div[class=post]',
-                    'regex':None,
+                'title':{
+                    'select':'div[class=post] a#cb_post_title_url',
+                },
+                'article':{
+                    'select':'div[class=post] div#cnblogs_post_body',
+                    'length': 400,
                 }
             }
         }

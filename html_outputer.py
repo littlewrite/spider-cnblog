@@ -20,29 +20,37 @@ class HtmlOutputer(object):
             self.article.append(item)
 
     def output_html(self):
-        file_out = open('out.titles.html', 'w')
-        file_out.write("<html>")
-        file_out.write("<head><title>爬取结果</title></head>")
-        file_out.write("<body>")
-        file_out.write("<ul>")
+        html_body1 = u'''
+<html>
+    <head>
+        <title>爬取结果</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    </head>
+    <body>'''
+        html_body2 = u'''
+    </body>
+</html>'''
+        html_content = u"<ul>"
         for data in self.titles:
-            file_out.write("<li>%s</li>" % data['title'].encode('utf-8'))
-        file_out.write("</ul>")
-        file_out.write("</body>")
-        file_out.write("</html>")
+            html_content += u"\n<li>%s</li>" % data['title']
+        html_content += u"</ul>"
+
+        file_out = open('out.titles.html', 'w')
+        file_out.write(html_body1.encode('utf-8', 'ignore'))
+        file_out.write(html_content.encode('utf-8', 'ignore'))
+        file_out.write(html_body2.encode('utf-8', 'ignore'))
         file_out.close()
 
-        file_out = open('out.article.html', 'w')
-        file_out.write("<html>")
-        file_out.write("<head><title>爬取结果</title></head>")
-        file_out.write("<body>")
-        file_out.write("<table>")
+        html_content = u"<table>"
         for data in self.article:
-            file_out.write("<tr>")
-            file_out.write("<td>%s</td>" % data['title'].encode('utf-8'))
-            file_out.write("<td>%s</td>" % data['content'].encode('utf-8'))
-            file_out.write("</tr>")
-        file_out.write("</table>")
-        file_out.write("</body>")
-        file_out.write("</html>")
+            html_content += u"\n<tr>"
+            html_content += u"\n<td>%s</td>" % data['type']
+            html_content += u"\n<td>%s</td>" % data['article']
+            html_content += u"</tr>"
+        html_content += u"</table>"
+
+        file_out = open('out.article.html', 'w')
+        file_out.write(html_body1.encode('utf-8', 'ignore'))
+        file_out.write(html_content.encode('utf-8', 'ignore'))
+        file_out.write(html_body2.encode('utf-8', 'ignore'))
         file_out.close()

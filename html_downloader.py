@@ -19,12 +19,13 @@ class HtmlDownloader(object):
                 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
                 'user-agent': 'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36'
             }
-            re = requests.get(url, headers=headers, proxies=proxies)
+            re = requests.get(url, headers=headers)
+            # re = requests.get(url, headers=headers, proxies=proxies)
             if 200 != re.status_code:
                 return None
             else:
-                re.encoding = 'utf-8'
-                return re.text
+                return re.content.decode(re.apparent_encoding,'replace').encode('utf-8')
+
         except BaseException as e:
             print("Download HTML Error" + e.message)
 

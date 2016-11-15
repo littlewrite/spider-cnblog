@@ -27,13 +27,14 @@ DROP TABLE IF EXISTS `cnblog_blogs`;
 CREATE TABLE `cnblog_blogs` (
   `cnblog_blog_id` int(11) NOT NULL AUTO_INCREMENT,
   `url` varchar(64) COLLATE utf8_bin DEFAULT NULL,
+  `type` varchar(10) COLLATE utf8_bin NOT NULL DEFAULT '',
   `title` varchar(16) COLLATE utf8_bin DEFAULT NULL,
   `article` text COLLATE utf8_bin,
   `deleted` tinyint(1) NOT NULL DEFAULT '0',
   `creation_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`cnblog_blog_id`),
   UNIQUE KEY `idcnblog_blogs_UNIQUE` (`cnblog_blog_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3611 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=3647 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -52,7 +53,7 @@ CREATE TABLE `urls` (
   `creation_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`url_id`),
   UNIQUE KEY `idurls_UNIQUE` (`url_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1013 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=190 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -68,4 +69,4 @@ CREATE TABLE `urls` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-11-09  0:54:48
+-- Dump completed on 2016-11-16  0:15:26

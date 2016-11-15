@@ -9,8 +9,8 @@ class BlogStorage(abstsg):
         pass
 
     def has_blog(self, blog):
-        sql = u"select `cnblog_blog_id` from `cnblog_blogs` where `blog` = \"%s\" " % blog['title']
-        re = self.query(sql)
+        sql = u"select `cnblog_blog_id` from `cnblog_blogs` where `blog` = %s"
+        re = self.query(sql, (blog['title'],))
         if(None == re or 0 == re):
             return False
         return True
@@ -24,8 +24,8 @@ class BlogStorage(abstsg):
 
     def save_blog(self, blog):
         if None is not blog:
-            sql = u"insert into `cnblog_blogs` (`url`, `title`, `article`) value (\"%s\", \"%s\", %s)"
-            return self.execute(sql, (blog['url'], blog['title'], blog['content']))
+            sql = u"insert into `cnblog_blogs` (`url`, `type`, `article`) value (%s, %s, %s)"
+            return self.execute(sql, (blog['url'], blog['type'], blog['article']))
 
     def save_blogs(self, blogs):
         if None is not blogs and any(blogs):

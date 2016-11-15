@@ -40,11 +40,18 @@ class HtmlParser(object):
                 contents = soup.select(cur_content_config['select'])
                 for content in contents:
                     try:
+                        isAppend = False
                         data = {}
                         data['url'] = current_url
-                        data['title'] = ''
-                        data['content'] = content.text
-                        if (None is cur_content_config['regex']) or re.search(cur_content_config['regex'], content.text, re.I):
+                        data['type'] = content_config
+                        data['article'] = content.text
+                        if (not cur_content_config.has_key('regex')) \
+                                or re.search(cur_content_config['regex'], content.text, re.I):
+                            isAppend = True
+                        if (not cur_content_config.has_key('length')) \
+                                or len(content.text) > cur_content_config['length'] :
+                            isAppend = True
+                        if isAppend :
                             texts.append(data)
                     except Exception as e:
                         logging.error('Html Element Error!\nElement:' + content.text + 'Error:' + e.message)
@@ -59,7 +66,7 @@ class HtmlParser(object):
         if str_page_url is None or html_text is None:
             return None
 
-        soup = butfsp(html_text, 'html.parser', from_encoding='utf-8')
+        soup = butfsp(html_text, 'html.parser')
         return self._get_new_urls(str_page_url, soup), self._get_new_data(str_page_url, soup)
 
 

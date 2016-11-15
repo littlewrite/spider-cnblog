@@ -9,8 +9,8 @@ class UrlStorage(abstsg):
         pass
 
     def has_url(self, url):
-        sql = u"select `url_id` from `urls` where `url` = \"%s\" " % url['url']
-        re = self.query(sql)
+        sql = u"select `url_id` from `urls` where `url` = %s"
+        re = self.query(sql, (url['url'],))
         if any(re):
             return True
         return False
@@ -23,8 +23,8 @@ class UrlStorage(abstsg):
         return True
 
     def save_url(self, url):
-        sql = u"insert into `urls` (`url`, `title`, `visited`) value (\"%s\", \"%s\", %d)" % (url['url'], url['title'], 0)
-        return self.execute(sql)
+        sql = u"insert into `urls` (`url`, `title`, `visited`) value (%s, %s, %s)"
+        return self.execute(sql, (url['url'], url['title'], 0))
 
     def save_urls(self, urls):
         for url in urls:
@@ -34,6 +34,6 @@ class UrlStorage(abstsg):
     def get_new_url(self):
         sql = u"select * from `urls` where `visited` = 0 and `deleted` = 0 limit 0"
         re = self.query(sql)
-        sql = u"update `urls` where `url_id` = %d" % re[0]['id']
-        re = self.execute(sql)
+        sql = u"update `urls` where `url_id` = %s"
+        re = self.execute(sql, (re[0]['id'],))
         return re
